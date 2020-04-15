@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zsz.music.mapper.SongMapper">
+   <insert id="add" parameterType="song">
+      insert into song values(null,#{songName},#{special},#{singer},#{time},#{path},#{userId})
+   </insert>
+   <delete id="delete" parameterType="int">
+   	delete from song where id=#{id}
+   </delete>
+   <select id="getMySongById" parameterType="int" resultType="song">
+   	select * from song where id=#{id}
+   </select>
+   <update id="updateMysong" parameterType="song">
+   	update song set songName=#{songName},special=#{special},singer=#{singer} where id=#{id}
+   </update>
+   <select id="getMySongList" resultType="song">
+   	select * from song where userId=#{uid} limit #{begin},#{ps}
+   </select>
+   <select id="getAllSongList" resultType="SongView">
+   select s.*,s.id songId,u.userName from song s inner join user u on u.id=s.userId limit #{begin},#{ps}
+   </select>
+   <select id="getMyTotalRecords" parameterType="int" resultType="int">
+   	select count(*) from song where userId=#{id}
+   </select>
+    <select id="getAllTotalRecords" resultType="int">
+   	select count(*) from song 
+   </select>
+</mapper>

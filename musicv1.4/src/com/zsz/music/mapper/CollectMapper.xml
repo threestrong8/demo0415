@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zsz.music.mapper.CollectMapper">
+   <delete id="delete" parameterType="int">
+   	delete from collections where id=#{id}
+   </delete>
+   <select id="getMyCollectionsList" resultType="songView">
+   	select c.id collectionId,u.userName,u.id userId,s.songName,s.special,s.singer,s.time,s.path,s.id songId from song s inner join user u on u.id=s.userId 
+	inner join collections c on c.songId=s.id and c.userId=#{uid} limit #{begin},#{ps} 
+   </select>
+   <select id="getMyTotalCollectionRecords" parameterType="int" resultType="int">
+   	select count(*) from collections where userId=#{id}
+   </select>
+   <insert id="add" parameterType="collect">
+   	insert into collections values(null,#{songId},#{userId})
+   </insert>
+   <delete id="deleteBySongId" parameterType="int">
+     	delete from collections where songId=#{id}
+   </delete>
+</mapper>
